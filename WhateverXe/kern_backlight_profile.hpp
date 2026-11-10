@@ -1,5 +1,7 @@
-// Generic 16-bit PWM curve from WhateverGreen (BSD-3-Clause), F19Txxxx.
-// PNLF UID 19 selects a software brightness profile, not a panel identity.
+// Generic 16-bit PWM curve from WhateverGreen (BSD-3-Clause).
+// PNLF UID 16 is the classic WhateverGreen 16-bit PWM device; UID 19 is the
+// later custom-profile device. Both select a software brightness table, not
+// a panel identity. AppleIntelPanel looks up F<uid>Txxxx in ApplePanels.
 #pragma once
 #include <stdint.h>
 namespace XeBacklightProfile {
@@ -9,6 +11,6 @@ constexpr uint8_t curve[] = {
  0x31,0xA9,0x44,0x59,0x5E,0x76,0x83,0x11,0xB6,0xC7,0xFF,0x7B
 };
 inline bool eligible(unsigned uid,unsigned minimum,unsigned maximum,bool internal) {
- return internal && uid==19 && minimum==0 && maximum==65535;
+ return internal && (uid==16 || uid==19) && minimum==0 && maximum==65535;
 }
 }
